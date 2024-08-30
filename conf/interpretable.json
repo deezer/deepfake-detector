@@ -1,0 +1,10 @@
+{
+	"name": "interpretable",
+    "effects": [ "mono", "affine", "stft_db", "normalise", "slice_hf" ],
+    "normalise_mean": -4.0,
+    "normalise_std": 3.0,
+    "hf_cut": 16000,
+    "patch_size_t": 64,
+    "patch_size_f": 64,
+    "audio_slice": 2.0
+}

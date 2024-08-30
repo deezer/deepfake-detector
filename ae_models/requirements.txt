@@ -1,0 +1,6 @@
+numpy
+torch==2.2.0
+torchaudio==2.2.0
+transformers==4.38
+tensorflow
+git+https://github.com/descriptinc/descript-audio-codec

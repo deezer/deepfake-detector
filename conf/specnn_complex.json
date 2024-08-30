@@ -1,0 +1,7 @@
+{    
+	"name": "specnn_complex",
+	"effects": [ "mono", "affine", "stft_complex", "normalise", "slice_hf" ],
+    "normalise_mean": 0.0,
+    "normalise_std": 3,
+    "hf_cut": 16000
+}

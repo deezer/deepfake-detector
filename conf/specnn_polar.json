@@ -1,0 +1,7 @@
+{
+	"name": "specnn_polar",
+	"effects": [ "mono", "affine", "stft_polar", "slice_hf" ],
+    "normalise_mean": -4.0,
+    "normalise_std": 3.0,
+    "hf_cut": 16000
+}

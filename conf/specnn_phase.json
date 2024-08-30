@@ -1,0 +1,5 @@
+{
+	"name": "specnn_phase",
+    "effects": [ "mono", "affine", "stft_phase", "slice_hf" ],
+    "hf_cut": 16000
+}
