@@ -1,13 +1,793 @@
+<!DOCTYPE html>
 <html>
 <head>
-<title>AE</title>
+<title>AI-generated music detection</title>
+<style type="text/css">
+body {
+width: 100%;
+font-family: "Helvetica Neue", Arial;
+}
+
+h2 {
+color: #444;
+margin-bottom: 2rem;
+}
+
+h2 em {
+font-family: DejaVu Sans Mono, Menlo, Courier, monospace;
+}
+
+.sec {
+margin: 50px;
+margin-left: auto;
+margin-right: auto;
+width: 700px;
+padding: 3rem;
+box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+border-radius: .25rem;
+}
+
+.sec table {
+width: 650px;
+border-collapse: collapse;
+}
+
+.sec th {
+font-weight: bold;
+}
+
+.sec tr {
+border-top: 1px solid #DDD;
+}
+
+.sec td, th {
+padding: 1rem;
+vertical-align: middle;
+text-align: left;
+}
+
+.kbps {
+color: #888;
+font-style: normal;
+}
+
+</style>
 </head>
 <body>
-Hello world.
 
-<audio controls>
-<source src="audio_examples/encodec24/000002.mp3" type="audio/mpeg">
-</audio>
+<div class='sec'>
+<h1>AI-generated music examples</h1>
+<p>
+We provide seven examples audio files from the FMA dataset alongside auto-encoded audio reconstructions.
+</p>
+</div>
+
+
+
+    <div class='sec'>
+    <h2>File <em>000002.mp3</em></h2>
+    
+    <table>
+        <tr>
+        <th>Method</th>
+        <th style="text-align: right">Generated audio</th>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(24kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec24/000002.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(3kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec3/000002.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(6kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec6/000002.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Griffin-Mel <em class="kbps">(256kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/griffin256/000002.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Griffin-Mel <em class="kbps">(512kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/griffin512/000002.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(14kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac14/000002.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(2kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac2/000002.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(7kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac7/000002.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Musika</td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/musika/000002.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td><em class="real">Original</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/real/000002.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+</table>
+    </div>
+    
+
+    <div class='sec'>
+    <h2>File <em>000003.mp3</em></h2>
+    
+    <table>
+        <tr>
+        <th>Method</th>
+        <th style="text-align: right">Generated audio</th>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(24kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec24/000003.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(3kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec3/000003.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(6kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec6/000003.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Griffin-Mel <em class="kbps">(256kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/griffin256/000003.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Griffin-Mel <em class="kbps">(512kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/griffin512/000003.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(14kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac14/000003.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(2kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac2/000003.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(7kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac7/000003.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Musika</td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/musika/000003.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td><em class="real">Original</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/real/000003.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+</table>
+    </div>
+    
+
+    <div class='sec'>
+    <h2>File <em>000005.mp3</em></h2>
+    
+    <table>
+        <tr>
+        <th>Method</th>
+        <th style="text-align: right">Generated audio</th>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(24kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec24/000005.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(3kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec3/000005.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(6kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec6/000005.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Griffin-Mel <em class="kbps">(256kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/griffin256/000005.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Griffin-Mel <em class="kbps">(512kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/griffin512/000005.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(14kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac14/000005.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(2kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac2/000005.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(7kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac7/000005.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Musika</td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/musika/000005.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td><em class="real">Original</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/real/000005.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+</table>
+    </div>
+    
+
+    <div class='sec'>
+    <h2>File <em>000010.mp3</em></h2>
+    
+    <table>
+        <tr>
+        <th>Method</th>
+        <th style="text-align: right">Generated audio</th>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(24kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec24/000010.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(3kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec3/000010.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(6kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec6/000010.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Griffin-Mel <em class="kbps">(256kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/griffin256/000010.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Griffin-Mel <em class="kbps">(512kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/griffin512/000010.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(14kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac14/000010.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(2kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac2/000010.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(7kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac7/000010.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Musika</td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/musika/000010.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td><em class="real">Original</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/real/000010.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+</table>
+    </div>
+    
+
+    <div class='sec'>
+    <h2>File <em>000134.mp3</em></h2>
+    
+    <table>
+        <tr>
+        <th>Method</th>
+        <th style="text-align: right">Generated audio</th>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(24kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec24/000134.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(3kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec3/000134.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(6kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec6/000134.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Griffin-Mel <em class="kbps">(256kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/griffin256/000134.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Griffin-Mel <em class="kbps">(512kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/griffin512/000134.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(14kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac14/000134.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(2kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac2/000134.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(7kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac7/000134.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Musika</td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/musika/000134.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td><em class="real">Original</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/real/000134.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+</table>
+    </div>
+    
+
+    <div class='sec'>
+    <h2>File <em>000835.mp3</em></h2>
+    
+    <table>
+        <tr>
+        <th>Method</th>
+        <th style="text-align: right">Generated audio</th>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(24kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec24/000835.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(3kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec3/000835.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(6kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec6/000835.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Griffin-Mel <em class="kbps">(256kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/griffin256/000835.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Griffin-Mel <em class="kbps">(512kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/griffin512/000835.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(14kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac14/000835.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(2kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac2/000835.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(7kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac7/000835.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Musika</td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/musika/000835.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td><em class="real">Original</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/real/000835.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+</table>
+    </div>
+    
+
+    <div class='sec'>
+    <h2>File <em>000894.mp3</em></h2>
+    
+    <table>
+        <tr>
+        <th>Method</th>
+        <th style="text-align: right">Generated audio</th>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(24kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec24/000894.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(3kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec3/000894.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Encodec <em class="kbps">(6kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/encodec6/000894.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Griffin-Mel <em class="kbps">(256kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/griffin256/000894.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Griffin-Mel <em class="kbps">(512kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/griffin512/000894.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(14kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac14/000894.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(2kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac2/000894.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>LAC <em class="kbps">(7kbps)</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/lac7/000894.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td>Musika</td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/musika/000894.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+
+        <tr>
+        <td><em class="real">Original</em></td>
+        <td style="text-align: right">
+        <audio controls>
+            <source src="audio_examples/real/000894.mp3" type="audio/mpeg">
+        </audio>
+        </td>
+        </tr>
+</table>
+    </div>
+    
+
+<script>
+document.addEventListener('play', function(e){  
+    var audios = document.getElementsByTagName('audio');  
+    for(var i = 0, len = audios.length; i < len;i++){  
+        if(audios[i] != e.target){  
+            audios[i].pause();  
+        }  
+    }  
+}, true);
+</script>
 
 </body>
 </html>
