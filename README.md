@@ -12,3 +12,8 @@ More than a detector, we ponder the larger consequences of deploying a detector:
 _Most of our experiment code is available for the review. We will make the trained weights open source for the publication._
 
 ⚠️ Following the recent press releases by Deezer on our [AI-music detection tool](https://newsroom-deezer.com/2025/01/deezer-deploys-cutting-edge-ai-detection-tool-for-music-streaming/), let us clarify something for interested readers: the tool available in this repository is **not** the tool we use in production for synthetic music detection. This is due to the delay between doing research and having a paper being published. Nevertheless, our new tool succeeds this present work, is elaborated by the same authors, and with the same concerns in mind, namely aiming for interpretability, almost perfect accuracy scores, and a focus on a possibility for recourse in case of false positives, generalisation to unknown scenarios and robustness to manipulation.
+
+## License
+
+We provide this repository under the [CC-BY-NC-4.0](https://creativecommons.org/licenses/by-nc/4.0/) license. You may share (mirror) and adapt (borrow and alter) this content, providing that you credit this work and don't use it for commercial purposes.
+
