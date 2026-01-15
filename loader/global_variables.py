@@ -1,7 +1,7 @@
-HOME = "/xxx/yyy"
+HOME = "/home/jovyan/Thesis/Code/deepfake-detector" # This needs to point to the deepfake-detector folder
 POS_DB_PATH = HOME+"/fma_real_medium/resampled"
 NEG_DB_PATH = HOME+"/fma_rebuilt_medium"
-CODEC_DB_PATH = HOME+"/fma_codec/
+CODEC_DB_PATH = HOME+"/fma_codec/"
 WEIGHTS_PATH = HOME+"/deepfake/weights/final"
 RESULT_PATH = HOME+"/deepfake/results/final"
 SPLIT_PATH = HOME+"/deepfake/data/dataset_medium_split.npy"

@@ -42,4 +42,3 @@ out_name = ['musika']
 
 pipeline = Pipeline(all_mp3_paths, musika_conf)
 pipeline.run_loop(models, out_name)
-

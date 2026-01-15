@@ -1,17 +1,22 @@
 import os
+import sys
 from glob import glob
 
 import torch
 
+# Add parent directory to path to import modules
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
+
+from loader.global_variables import HOME
 from ae_models.griffinmel import GriffinMel
 from ae_models.pipeline import Pipeline
 
-GPU = 2
+GPU = 0
 griffin_conf = {
     "DEVICE": "cuda",
     "DB_PATH": HOME+"/fma_medium",
     "OUT_DB": HOME+"/fma_rebuilt_medium",
-    "BR_PATH": HOME+"/deepfake/data/bitrates_ffmpeg_medium.npy",
+    "BR_PATH": HOME+"/data/bitrates_ffmpeg_medium.npy",
     "DATA_SR": 44100,
     "SR": 44100, # target sr
     "MIN_DURATION": 3, # seconds
