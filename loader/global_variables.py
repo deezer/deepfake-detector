@@ -1,4 +1,4 @@
-HOME = "/home/jovyan/Thesis/Code/deepfake-detector" # This needs to point to the deepfake-detector folder
+HOME = "/xxx/yyy"
 POS_DB_PATH = HOME+"/fma_real_medium/resampled"
 NEG_DB_PATH = HOME+"/fma_rebuilt_medium"
 CODEC_DB_PATH = HOME+"/fma_codec/"
