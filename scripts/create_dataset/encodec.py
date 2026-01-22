@@ -1,13 +1,8 @@
 import os
-import sys
 from glob import glob
 
 import torch
 
-# Add parent directory to path to import modules
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
-
-from loader.global_variables import HOME
 from ae_models.encodec import Encodec
 from ae_models.pipeline import Pipeline
 
