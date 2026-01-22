@@ -25,7 +25,6 @@ parser.add_argument("--gpu", help="gpu to evaluate on", type=int, default=-1)
 parser.add_argument("--steps", help="gpu to evaluate on", type=int, default=500)
 parser.add_argument("--repeat", help="gpu to evaluate on", type=int, default=-1)
 parser.add_argument("--codec", help="codec", type=str, default="")
-parser.add_argument("--cpu", help="force CPU mode", action="store_true")
 parser.add_argument('--external_home', action='store_true')
 args = parser.parse_args()
 
@@ -50,15 +49,10 @@ configuration = ConfLoader(CONF_PATH)
 configuration.load_model(args.config)
 global_conf = configuration.conf
 
-# GPU/CPU setup
-if args.cpu:
-    print("CPU mode forced (--cpu flag)")
-    tf.config.set_visible_devices([], 'GPU')
-    GPU = -1
-elif GPU >= 0:
-    gpus = tf.config.list_physical_devices('GPU')
-    tf.config.set_visible_devices(gpus[GPU], 'GPU')
-    tf.config.experimental.set_memory_growth(gpus[GPU], True)
+gpus = tf.config.list_physical_devices('GPU')
+tf.config.set_visible_devices(gpus[GPU], 'GPU')
+tf.config.experimental.set_memory_growth(gpus[GPU], True)
+
 if args.repeat > 0:
     global_conf['repeat'] = args.repeat  # keep the repeat low
 
@@ -93,31 +87,6 @@ def one_hot_encoder(y, depth):
     idx = (1 - y1) * (y2 + 1)
     return y1, tf.one_hot(idx, depth)
 
-# Extract 64x64 patches from spectrograms to match SavedModel input shape
-# The SavedModel was trained on 64x64 patches extracted from spectrograms
-@tf.function
-def extract_64x64_patch(x, y):
-    """Extract a 64x64 patch from spectrogram (center patch for deterministic evaluation)"""
-    # x shape is (batch, time, freq, channels) after batching
-    x_shape = tf.shape(x)
-    time_dim = x_shape[1]
-    freq_dim = x_shape[2]
-    
-    patch_time = 64
-    patch_freq = 64
-    
-    # Calculate center offsets
-    max_offset_t = tf.maximum(0, time_dim - patch_time)
-    max_offset_f = tf.maximum(0, freq_dim - patch_freq)
-    offset_t = max_offset_t // 2
-    offset_f = max_offset_f // 2
-    
-    # Extract center patch
-    x_patched = tf.slice(x, 
-                        [0, offset_t, offset_f, 0],
-                        [-1, patch_time, patch_freq, -1])
-    return x_patched, y
-
 it_test = loader.create_tf_iterator('test', augmenter = augmenter)
 if not ENCODER:
     it_test = it_test.map(lambda x, y: (x, one_hot_encoder(y, loader.n_encoders+1)) )
@@ -127,49 +96,22 @@ else:
 if 'use_raw' in global_conf:
     it_test = it_test.map(lambda x, y: (tf.expand_dims(x, -1), y) )
 
-# Apply patch extraction to match model's expected input shape (64x64)
-it_test = it_test.map(extract_64x64_patch)
-
 _it = iter(it_test)
 input_batch, y_batch = next(_it)
 
 ## normal run
 
-# Try to load as SavedModel first (team provided weights are in SavedModel format)
-# SavedModel format includes the full model architecture, so we can load it directly
-# without needing to build the model first. This avoids encoder count mismatches:
-# the model was trained on 9 encoders (10 classes), but the dataset may have fewer.
-weights_path = os.path.join(WEIGHTS_PATH, args.weights + args.encoder)
-saved_model_pb = os.path.join(weights_path, "saved_model.pb")
-
-if os.path.isdir(weights_path) and os.path.exists(saved_model_pb):
-    print("Detected SavedModel format, loading...")
-    try:
-        loaded_model = tf.keras.models.load_model(weights_path, compile=False)
-        print("✓ Successfully loaded SavedModel")
-        
-        class ModelWrapper:
-            def __init__(self, model):
-                self.m = model
-        
-        model = ModelWrapper(loaded_model)
-    except Exception as e:
-        print(f"Error: Could not load SavedModel: {e}")
-        import sys
-        sys.exit(1)
+n_encoders = loader.n_encoders+1
+if ENCODER:
+    print("\nEncoder-specific model! `{}`\n".format(ENCODER))
+    n_encoders = None
+if 'use_raw' in global_conf:
+    model = SimpleCNN(input_batch.shape[1:], global_conf, detect_encoder = n_encoders)
 else:
-    # Build model from architecture (for checkpoint files, not SavedModel)
-    n_encoders = loader.n_encoders+1
-    if ENCODER:
-        print("\nEncoder-specific model! `{}`\n".format(ENCODER))
-        n_encoders = None
-    if 'use_raw' in global_conf:
-        model = SimpleCNN(input_batch.shape[1:], global_conf, detect_encoder = n_encoders)
-    else:
-        model = SimpleSpectrogramCNN(input_batch.shape[1:], global_conf, detect_encoder = n_encoders)
+    model = SimpleSpectrogramCNN(input_batch.shape[1:], global_conf, detect_encoder = n_encoders)
 
-    # model.m.summary()
-    model.m.load_weights( os.path.join(WEIGHTS_PATH, args.weights + args.encoder) )
+# model.m.summary()
+model.m.load_weights( os.path.join(WEIGHTS_PATH, args.weights + args.encoder) )
 if not ENCODER:
     model.m.compile(
         optimizer=keras.optimizers.Adam(learning_rate=1e-3),
@@ -203,7 +145,6 @@ for encoder in loader.encoders:
         fake_it = fake_it.map(lambda x, y: (x, y[0]))
     if 'use_raw' in global_conf:
         fake_it = fake_it.map(lambda x, y: (tf.expand_dims(x, -1), y) )
-    fake_it = fake_it.map(extract_64x64_patch)
     scores[encoder] = model.m.evaluate(fake_it, batch_size = global_conf["batch_size"], steps=max_steps)
 
     np.save(os.path.join(RESULT_PATH, "{}{}{}.npy".format(args.config, CODEC_EXTENSION, ENCODER)), scores)
@@ -213,6 +154,5 @@ real_it = loader.create_fast_eval_iterator('real', augmenter = augmenter, advers
 real_it = real_it.map(lambda x, y: (x, one_hot_encoder(y, loader.n_encoders+1)) )
 if 'use_raw' in global_conf:
     real_it = real_it.map(lambda x, y: (tf.expand_dims(x, -1), y) )
-real_it = real_it.map(extract_64x64_patch)
 scores['real'] = model.m.evaluate(real_it, batch_size = global_conf["batch_size"], steps=max_steps)
 np.save(os.path.join(RESULT_PATH, "{}{}{}.npy".format(args.config, CODEC_EXTENSION, ENCODER)), scores)
