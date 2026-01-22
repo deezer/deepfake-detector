@@ -6,7 +6,7 @@ import torch
 from ae_models.griffinmel import GriffinMel
 from ae_models.pipeline import Pipeline
 
-GPU = 0
+GPU = 2
 griffin_conf = {
     "DEVICE": "cuda",
     "DB_PATH": HOME+"/fma_medium",
