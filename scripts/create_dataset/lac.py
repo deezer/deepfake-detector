@@ -11,7 +11,7 @@ lac_conf = {
     "DEVICE": "cuda",
     "DB_PATH": HOME+"/fma_medium",
     "OUT_DB": HOME+"/fma_rebuilt_medium",
-    "BR_PATH": HOME+"/deepfake/data/bitrates_ffmpeg_medium.npy",
+    "BR_PATH": HOME+"/data/bitrates_ffmpeg_medium.npy",
     "DATA_SR": 44100,
     "SR": 44100, # target sr
     "MIN_DURATION": 3, # seconds
