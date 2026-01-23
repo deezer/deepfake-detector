@@ -9,11 +9,42 @@ The FMA dataset is available at [github.com/mdeff/fma](https://github.com/mdeff/
 
 More than a detector, we ponder the larger consequences of deploying a detector: robustness to manipulation, generalisation to different models, interpretability, ...
 
-_Most of our experiment code is available for the review. We will make the trained weights open source for the publication._
-
 ⚠️ Following the recent press releases by Deezer on our [AI-music detection tool](https://newsroom-deezer.com/2025/01/deezer-deploys-cutting-edge-ai-detection-tool-for-music-streaming/), let us clarify something for interested readers: the tool available in this repository is **not** the tool we use in production for synthetic music detection. This is due to the delay between doing research and having a paper being published. Nevertheless, our new tool succeeds this present work, is elaborated by the same authors, and with the same concerns in mind, namely aiming for interpretability, almost perfect accuracy scores, and a focus on a possibility for recourse in case of false positives, generalisation to unknown scenarios and robustness to manipulation.
 
 ## License
 
 We provide this repository under the [CC-BY-NC-4.0](https://creativecommons.org/licenses/by-nc/4.0/) license. You may share (mirror) and adapt (borrow and alter) this content, providing that you credit this work and don't use it for commercial purposes.
+
+## Cite
+
+Either the ICASSP publication :
+```
+@inproceedings{afchar2025ai,
+  title={AI-Generated Music Detection and its Challenges},
+  author={Afchar, Darius and Meseguer-Brocal, Gabriel and Hennequin, Romain},
+  booktitle={ICASSP 2025-2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
+  pages={1--5},
+  year={2025},
+  organization={IEEE}
+}
+```
+
+or the previous Arxiv version (longer paper with more experiments on calibration and interpretability):
+```
+@article{afchar2024detecting,
+  title={Detecting music deepfakes is easy but actually hard},
+  author={Afchar, Darius and Meseguer-Brocal, Gabriel and Hennequin, Romain},
+  journal={arXiv preprint arXiv:2405.04181},
+  year={2024}
+}
+```
+
+## Reproducibility instructions
+
+To use the autoencoders, you need to clone the following repo into a `pretrained` folder :
+* [Git Musika!](https://github.com/marcoppasini/musika)
+* [LAC](https://github.com/hugofloresgarcia/lac), using the pretrained weights found in [VampNet](https://github.com/hugofloresgarcia/vampnet)
+
+Then, in the `utils_encode.py` script in the musika folder, I added a method `encode_audio` to return latent from the model given an audio `wv`, namely copying the method `compress_whole_files` and doing a `return lat` instead of doing a `np.save` in the end.
+
 
