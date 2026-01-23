@@ -175,6 +175,11 @@ class AudioLoader:
                 channels_first = False,
                 )
             audio_raw = audio_raw.numpy()
+            # Handle mono tracks: duplicate to stereo
+            # audio_raw shape is (time, channels)
+            if audio_raw.shape[-1] == 1:
+                # Duplicate mono channel to make stereo
+                audio_raw = np.repeat(audio_raw, 2, axis=-1)
             return audio_raw
 
         audio = tf.py_function(
